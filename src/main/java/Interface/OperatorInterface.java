@@ -1,7 +1,7 @@
 package Interface;
 
-public interface OperatorInterface {
+public interface OperatorInterface<T> {
     String operator = null;
 
-    <T> T calculate(T num);
+    T calculate();
 }
