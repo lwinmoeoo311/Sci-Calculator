@@ -4,9 +4,12 @@ public enum OperatorEnum {
     ADD("+"),
     SUB("-"),
     MUL("*"),
-    DIV("/");
+    DIV("/"),
+    MOD("%"),
+    CLR(""),
+    STOP("");
 
-    private String operator;
+    private final String operator;
     OperatorEnum(String operator) {
         this.operator = operator;
     }
