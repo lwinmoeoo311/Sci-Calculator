@@ -1,5 +1,7 @@
 package Interface;
 
+import org.main.CalculationContainer;
+
 public enum OperatorEnum {
     ADD("+"),
     SUB("-"),

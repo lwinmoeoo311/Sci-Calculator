@@ -4,7 +4,12 @@ import Interface.OperatorEnum;
 
 public class CalculationContainer {
 
-    static String prompt = null;
+    public static boolean FINISHED_OPERATION = true;
+    private static String prompt = "";
+    private static String operator = "+";
+    private static String operand = "";
+    private double tmpResult = 0.0;
+    private static double result = 0.0;
     private static CalculationContainer container;
 
     public static CalculationContainer getInstance() {
@@ -16,23 +21,54 @@ public class CalculationContainer {
     }
 
     protected void setOperand(String operand) {
-        if (prompt == null) {
-            prompt = "";
+        if (!FINISHED_OPERATION) {
+            CalculationContainer.operand = operand;
+            FINISHED_OPERATION = true;
+        } else {
+            CalculationContainer.operand += operand;
+            result = tmpResult;
         }
         prompt += operand;
+        calculate();
     }
 
-    protected void setOperator(OperatorEnum operator) {
-        switch (operator) {
-            case ADD -> System.out.println("Add");
-            case SUB -> System.out.println("Sub");
-            case MUL -> System.out.println("Mul");
-            case DIV -> System.out.println("Div");
+    protected void setOperator(String operator) {
+        switch (OperatorEnum.valueOf(operator)) {
+            case ADD, SUB, MUL, DIV, MOD -> {
+                CalculationContainer.operator = OperatorEnum.valueOf(operator).getOperator();
+                tmpResult = result;
+                FINISHED_OPERATION = false;
+            }
+            case CLR -> prompt = "";
+            case STOP -> Main.inputFlg = false;
+            default -> CalculationContainer.operator = "";
         }
-        prompt += operator.getOperator();
+        prompt += CalculationContainer.operator;
+    }
+
+    protected void calculate() {
+
+        switch (operator) {
+            case "+" -> {
+                result += Integer.parseInt(operand);
+            }
+            case "-" -> {
+                result -= Integer.parseInt(operand);
+            }
+            case "*" -> {
+                result *= Integer.parseInt(operand);
+            }
+            case "/" -> {
+                result /= Integer.parseInt(operand);
+            }
+        }
     }
 
     public static String getPrompt() {
         return prompt;
+    }
+
+    public static String getResult() {
+        return Double.toString(result);
     }
 }
