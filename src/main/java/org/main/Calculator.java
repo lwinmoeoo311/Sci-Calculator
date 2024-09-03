@@ -10,7 +10,7 @@ public class Calculator {
         if (input.matches("-?\\d+(\\.\\d+)?")) {
             container.setOperand(input);
         } else {
-            container.setOperator(OperatorEnum.valueOf(input.toUpperCase()));
+            container.setOperator(input.toUpperCase());
         }
     }
 }
